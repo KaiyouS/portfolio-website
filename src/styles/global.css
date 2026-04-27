@@ -1,0 +1,328 @@
+@layer reset, base, components, utilities;
+
+@layer reset {
+
+    *,
+    *:before,
+    *:after {
+        box-sizing: border-box;
+    }
+
+    * {
+        margin: 0;
+    }
+
+    :root {
+        text-size-adjust: none;
+    }
+
+    body {
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    img,
+    picture,
+    video,
+    canvas,
+    svg {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+
+    input,
+    button,
+    textarea,
+    select {
+        font: inherit;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-size: inherit;
+        font-weight: inherit;
+        text-wrap: balance;
+    }
+
+    button {
+        all: unset;
+        cursor: pointer;
+        box-sizing: border-box;
+    }
+
+    button:focus-visible {
+        outline: revert;
+    }
+
+    p {
+        text-wrap: pretty;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+}
+
+@layer base {
+    @font-face {
+        font-display: swap;
+        font-family: Satoshi;
+        font-style: normal;
+        font-weight: 900;
+        src: url('/fonts/Satoshi-Black.woff2') format('woff2');
+    }
+
+    @font-face {
+        font-display: swap;
+        font-family: Outfit;
+        font-style: normal;
+        font-weight: 300;
+        src: url('/fonts/outfit-v11-latin-300.woff2') format("woff2");
+    }
+
+    @font-face {
+        font-display: swap;
+        font-family: Outfit;
+        font-style: normal;
+        font-weight: 500;
+        src: url('/fonts/outfit-v11-latin-500.woff2') format("woff2");
+    }
+
+    :root {
+        --font-headline: "Satoshi", sans-serif;
+        --font-text: "Outfit", sans-serif;
+        --text-xs: .9rem;
+        --text-sm: 1rem;
+        --text-normal: 1.1rem;
+        --text-md: 1.5rem;
+        --text-lg: 1.75rem;
+        --text-xl: 2rem;
+        
+        --color-bg: var(--color-navy);
+        --color-text: rgba(255, 255, 255, .9);
+
+        --color-blue-dark: oklch(.2 .02 232.31 / 1);
+        --color-navy: rgba(17, 24, 39, 1);
+        --color-blue: rgba(25.021, 56.75, 72.545);
+        --color-slate: rgba(84.457, 102.54, 117.48);
+        --color-grey: rgba(122, 122, 131.84);
+        --color-charcoal: rgba(24, 24, 27, 1);
+        
+        --color-primary-rgb: 255, 221, 51;
+        --color-primary: rgba(var(--color-primary-rgb), 1);
+        --color-primary-light: rgba(255, 235, 133, 1);
+        --color-primary-medium: oklch(92% 0.12 98);
+        --color-primary-bg: rgba(var(--color-primary-rgb), 0.1);
+
+        --spacing-section: 4rem;
+        --spacing-x: 1.5em;
+        --spacing-y: 1.5rem;
+        --rounding: 3px;
+        --content-width: 80rem;
+        --max-text-width: 60ch;
+
+        @media (min-width: 30rem) {
+            --text-xs: 1rem;
+            --text-sm: 1.1rem;
+            --text-normal: 1.25rem;
+            --text-lg: 2.2rem;
+            --text-xl: 2.6rem;
+        }
+
+        @media (min-width: 47.5rem) {
+            --spacing-section: 6rem;
+        }
+
+        @media (min-width: 75rem) {
+            --spacing-section: 8rem;
+        }
+    }
+}
+
+@layer base {
+    :root {
+        color-scheme: dark;
+        scrollbar-gutter: stable;
+        scroll-behavior: smooth;
+        scroll-padding-top: 6rem
+    }
+
+    ::selection {
+        background-color: var(--color-primary-light);
+        color: var(--color-blue)
+    }
+
+    *:focus-visible {
+        outline-color: var(--focus-outline-color);
+        outline-offset: var(--focus-outline-offset);
+        outline-style: var(--focus-outline-style);
+        outline-width: var(--focus-outline-width)
+    }
+
+    @view-transition {
+        navigation: auto;
+    }
+
+    body {
+        font-family: var(--font-text);
+        font-size: var(--text-normal);
+        font-weight: 300;
+        line-height: 1.5;
+        background-color: var(--color-bg);
+        overflow-x: hidden;
+        color: var(--color-text);
+        display: flex;
+        flex-direction: column;
+        min-height: 100svh
+    }
+
+    h1 {
+        font-size: var(--text-xl);
+        font-family: var(--font-headline);
+        line-height: 1.1;
+        font-weight: 900;
+        letter-spacing: -.025em;
+        color: var(--color-primary-medium);
+        margin-bottom: 1em;
+        &::selection,::selection {
+            background-color: var(--color-blue);
+            color: currentColor
+        }
+    }
+
+    h2 {
+        font-size: var(--text-lg);
+        font-family: var(--font-headline);
+        color: var(--color-primary-medium);
+        line-height: 1.15;
+        font-weight: 900;
+        margin-bottom: .25em
+    }
+
+    h3 {
+        font-size: var(--text-md);
+        font-family: var(--font-headline);
+        color: var(--color-primary-medium);
+        line-height: 1.15;
+        font-weight: 900;
+        margin-bottom: .5em
+    }
+
+    h1,h2,h3,h4,h5,h6 {
+        position: relative;
+        margin-top: 2em;
+        vertical-align: baseline;
+        &:first-of-type {
+            margin-top: 0
+        }
+
+        :where(&)+& {
+            margin-top: 1rem
+        }
+
+        .anchor-link {
+            display: inline-block;
+            vertical-align: baseline;
+            text-decoration: none;
+            &:before {
+                display: inline-block;
+                margin-left: -1.25em;
+                margin-right: .5em;
+                content: "#";
+                font-size: .675em;
+                color: var(--color-primary-light);
+                opacity: .4;
+                text-decoration: none;
+                transition: opacity .4s
+            }
+
+            &:hover,&:focus-visible {
+                &:before {
+                    opacity: 1
+                }
+            }
+        }
+    }
+
+    a {
+        border-radius: var(--rounding)
+    }
+
+    em {
+        font-style: normal;
+        color: var(--color-primary-light)
+    }
+
+    iframe,video {
+        --focus-outline-color: var(--color-primary);
+        --focus-outline-offset: 4px;
+        box-shadow: var(--shadow);
+        border-radius: var(--rounding)
+    }
+
+    p:not(:last-child),ul:not(:last-child) {
+        margin-bottom:1.5em
+    }
+
+    main a {
+        text-decoration: underline;
+        text-decoration-color: var(--color-primary-light);
+        text-underline-offset: .15em;
+        transition: color .4s;
+        &:hover,&:focus-visible {
+            color: var(--color-primary-light)
+        }
+    }
+}
+
+@layer components {
+    .button {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.75rem 1.5rem;
+        background-color: var(--color-primary);
+        color: var(--color-bg);
+        border-radius: var(--rounding);
+        font-family: var(--font-text);
+        font-weight: 700;
+        text-decoration: none;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+        opacity: 0.9;
+        transform: translateY(-2px);
+    }
+
+    .button--secondary {
+        background: transparent;
+        border: 1px solid var(--color-primary);
+        color: var(--color-primary);
+    }
+
+    .button--secondary:hover {
+        background: var(--color-primary-bg);
+    }
+}
+
+@layer utilities {
+    .container {
+        width: 100%;
+        margin-inline: auto;
+        padding-inline: 1rem;
+        max-width: var(--content-width);
+    }
+
+    @media (min-width: 30rem) {
+        .container {
+            padding-inline: 2rem;
+        }
+    }
+}
