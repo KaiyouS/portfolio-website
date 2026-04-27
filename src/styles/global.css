@@ -269,16 +269,6 @@
     p:not(:last-child),ul:not(:last-child) {
         margin-bottom:1.5em
     }
-
-    main a {
-        text-decoration: underline;
-        text-decoration-color: var(--color-primary-light);
-        text-underline-offset: .15em;
-        transition: color .4s;
-        &:hover,&:focus-visible {
-            color: var(--color-primary-light)
-        }
-    }
 }
 
 @layer components {
