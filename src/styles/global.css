@@ -105,7 +105,7 @@
 
         --color-blue-dark: oklch(.2 .02 232.31 / 1);
         --color-navy: rgba(17, 24, 39, 1);
-        --color-blue: rgba(25.021, 56.75, 72.545);
+        --color-blue: rgb(25, 50, 73);
         --color-slate: rgba(84.457, 102.54, 117.48);
         --color-grey: rgba(122, 122, 131.84);
         --color-charcoal: rgba(24, 24, 27, 1);
