@@ -1,11 +1,103 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button.astro";
+import { Image } from "astro:assets";
+import logo from "../assets/logo.svg";
 ---
+<Layout title="Kaiyou | Full-Stack Developer">
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <h1>
+          Hi, I'm Kaiyou.<br />
+          <small>Full-Stack Developer</small>
+        </h1>
 
-<Layout>
-	<Welcome />
+        <p>
+        I’m a full-stack developer who believes software should be as much of a pleasure 
+        to maintain as it is to use. I focus on writing clean, readable code and following 
+        best practices—not because they’re rules, but because they make better products. 
+        </p>
+        <p>
+        When I'm not in the terminal, I’m usually thinking through a <strong>chess</strong> move, 
+        listening to a <strong>ballad</strong>, or looking for a clear sky to <strong>stargaze</strong>.
+        </p>
+
+        <div class="hero-actions">
+          <Button href="#project">View My Work</Button>
+          <Button href="/contact" variant="secondary">Get in Touch</Button>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <Image
+          src={ logo }
+          alt="A photo of Kaiyou"
+          class="content"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .hero {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  @media (min-width: 47.5rem) {
+    .hero-inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .hero-content {
+    flex: 1;
+    max-width: var(--max-text-width);
+  }
+
+  h1 small {
+    color: var(--color-text);
+    font-size: var(--text-lg);
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-image .content {
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transform: rotate(2deg);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    
+    &:hover {
+      transform: rotate(0deg);
+    }
+  }
+</style>
