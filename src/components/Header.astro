@@ -25,9 +25,9 @@ const currentPath = Astro.url.pathname;
             </a>
             
             <ul>
-                <li><a href="/" class={currentPath === '/' ? 'active' : ''}>Home</a></li>
-                <li><a href="/contact/" class={currentPath.includes('/contact') ? 'active' : ''}>Contact</a></li>
-                <li><a href="/projects/" class={currentPath.includes('/projects') ? 'active' : ''}>Projects</a></li>
+                <li><a href="/" class={currentPath === '/#  ' ? 'active' : ''}>Home</a></li>
+                <li><a href="#contact" class={currentPath.includes('#contact') ? 'active' : ''}>Contact</a></li>
+                <li><a href="#projects" class={currentPath.includes('#projects') ? 'active' : ''}>Projects</a></li>
             </ul>
         </nav>
     </div>

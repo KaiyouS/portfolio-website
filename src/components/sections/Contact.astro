@@ -1,0 +1,173 @@
+---
+import Button from "../Button.astro"
+---
+<section id="contact" class="section contact-section">
+  <div class="container contact-inner">
+    
+    <div class="contact-info">
+      <h2>Let's build something together.</h2>
+      <p>
+        I'm open for new opportunities. Whether you have a question, a project idea, 
+        or just want to say hi, I'll try my best to get back to you!
+      </p>
+      
+      <div class="contact-details">
+        <div class="detail-item">
+          <strong>Email</strong>
+          <a href="mailto:hello@example.com">hello@example.com</a>
+        </div>
+        <div class="detail-item">
+          <strong>Location</strong>
+          <span>Davao City, Philippines</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form-wrapper">
+      <form class="contact-form" action="#" method="POST" onsubmit="event.preventDefault(); alert('Form submission ready to be wired up!');">
+        
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required placeholder="John Doe" />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="john@example.com" />
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required rows="5" placeholder="How can I help you?"></textarea>
+        </div>
+
+        <button type="submit" class="button">Send Message</button>
+        <!-- <button type="submit" class="button">Send Message</button> -->
+        <!-- <Button type="submit">Send Message</Button> -->
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .contact-section {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+    border-top: 1px solid rgba(255, 255, 255, 0.05); 
+  }
+
+  .contact-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  @media (min-width: 48rem) {
+    .contact-inner {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+  }
+
+  .contact-info {
+    flex: 1;
+    max-width: var(--max-text-width);
+  }
+
+  .contact-info p {
+    font-size: var(--text-normal);
+    opacity: 0.8;
+    margin-bottom: 2rem;
+  }
+
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .detail-item strong {
+    color: var(--color-primary-light);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .detail-item a, .detail-item span {
+    font-size: 1.1rem;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .detail-item a:hover {
+    color: var(--color-primary);
+  }
+
+  .contact-form-wrapper {
+    flex: 1;
+    width: 100%;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow);
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0.9;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    color: var(--color-text);
+    font-family: var(--font-text);
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-bg);
+  }
+
+  .contact-form .button {
+    margin-top: 0.5rem;
+    justify-content: center;
+  }
+</style>
