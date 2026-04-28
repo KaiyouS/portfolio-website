@@ -24,8 +24,12 @@ import Button from "../Button.astro"
     </div>
 
     <div class="contact-form-wrapper">
-      <form class="contact-form" action="#" method="POST" onsubmit="event.preventDefault(); alert('Form submission ready to be wired up!');">
+      
+      <form id="contact-form" class="contact-form" action="https://api.web3forms.com/submit" method="POST">
         
+        <input type="hidden" name="access_key" value="cc864350-ae5d-40c3-bd8d-fe39699525e2">
+        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
         <div class="form-group">
           <label for="name">Name</label>
           <input type="text" id="name" name="name" required placeholder="John Doe" />
@@ -41,12 +45,20 @@ import Button from "../Button.astro"
           <textarea id="message" name="message" required rows="5" placeholder="How can I help you?"></textarea>
         </div>
 
-        <button type="submit" class="button">Send Message</button>
-        <!-- <button type="submit" class="button">Send Message</button> -->
-        <!-- <Button type="submit">Send Message</Button> -->
+        <Button type="submit" id="submit-btn">Send Message</Button>
       </form>
-    </div>
 
+      <div id="success-message" class="success-message hidden">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <h3>Message Sent!</h3>
+        <p>Thanks for reaching out. I'll get back to you as soon as possible.</p>
+      </div>
+
+    </div>
+    
   </div>
 </section>
 
@@ -170,4 +182,99 @@ import Button from "../Button.astro"
     margin-top: 0.5rem;
     justify-content: center;
   }
+  
+  .hidden {
+    display: none !important;
+  }
+
+  .success-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 1rem;
+    gap: 1rem;
+    animation: fadeIn 0.5s ease forwards;
+  }
+
+  .success-message svg {
+    width: 4rem;
+    height: 4rem;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .success-message h3 {
+    margin: 0;
+    color: var(--color-text);
+  }
+
+  .success-message p {
+    margin: 0;
+    opacity: 0.8;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const successMessage = document.getElementById('success-message');
+    const submitBtn = document.getElementById('submit-btn');
+    
+    if (submitBtn == null || successMessage == null) {
+        return;
+    }
+    
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'Sending...';
+        submitBtn.style.opacity = '0.7';
+        submitBtn.style.pointerEvents = 'none';
+
+        const formData = new FormData(form);
+
+        try {
+          const response = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            body: formData
+          });
+
+          if (response.ok) {
+            form.classList.add('hidden');
+            successMessage.classList.remove('hidden');
+            setTimeout(() => {
+              successMessage.classList.add('hidden');
+              form.classList.remove('hidden');
+              
+              form.reset(); 
+              
+              submitBtn.innerHTML = originalBtnText;
+              submitBtn.style.opacity = '1';
+              submitBtn.style.pointerEvents = 'auto';
+            }, 5000);
+
+          } else {
+            alert('Something went wrong. Please try again.');
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.style.opacity = '1';
+            submitBtn.style.pointerEvents = 'auto';
+          }
+        } catch (error) {
+          alert('Network error. Please check your connection and try again.');
+          submitBtn.innerHTML = originalBtnText;
+          submitBtn.style.opacity = '1';
+          submitBtn.style.pointerEvents = 'auto';
+        }
+      });
+    }
+  });
+</script>
