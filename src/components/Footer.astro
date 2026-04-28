@@ -1,0 +1,146 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="logo">Kaiyou.</a>
+      <p>Building fast, accessible, and beautiful web applications.</p>
+    </div>
+
+    <div class="footer-links">
+      <div class="link-group">
+        <h4>Navigation</h4>
+        <a href="/">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div class="link-group">
+        <h4>Socials</h4>
+        <a
+          href="https://github.com/KaiyouS"
+          target="_blank"
+          rel="noopener noreferrer">GitHub</a
+        >
+        <a
+          href="https://www.linkedin.com/in/kaiyou-serra/"
+          target="_blank"
+          rel="noopener noreferrer">LinkedIn</a
+        >
+        <a
+          href="https://leetcode.com/u/monokai1941/"
+          target="_blank"
+          rel="noopener noreferrer">LeetCode</a
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="footer-bottom">
+      <p>&copy; {currentYear} Kaiyou. All rights reserved.</p>
+      <p class="built-with">Built with Astro and with ❤️</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: var(--spacing-section);
+    padding-bottom: 2rem;
+    margin-top: auto;
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin-bottom: 4rem;
+  }
+
+  @media (min-width: 48rem) {
+    .footer-inner {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  .footer-brand {
+    max-width: 300px;
+  }
+
+  .footer-brand .logo {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+
+  .footer-brand p {
+    font-size: 0.95rem;
+    opacity: 0.7;
+    margin: 0;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 4rem;
+    flex-wrap: wrap;
+  }
+
+  .link-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .link-group h4 {
+    color: var(--color-text);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+  }
+
+  .link-group a {
+    color: var(--color-text);
+    opacity: 0.7;
+    font-size: 0.95rem;
+    transition:
+      color 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  .link-group a:hover {
+    color: var(--color-primary);
+    opacity: 1;
+  }
+
+  .footer-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.85rem;
+    opacity: 0.6;
+  }
+
+  @media (min-width: 48rem) {
+    .footer-bottom {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  .footer-bottom p {
+    margin: 0;
+  }
+</style>
