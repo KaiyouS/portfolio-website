@@ -1,10 +1,15 @@
 ---
-const { href, variant } = Astro.props;
----
+const { href, variant, type } = Astro.props;
 
-<a href={href} class={`button ${variant === 'secondary' ? 'button--secondary' : ''}`}>
+const Tag = href ? 'a' : 'button';
+---
+<Tag 
+  href={href} 
+  type={!href ? (type || 'button') : undefined}
+  class={`button ${variant === 'secondary' ? 'button--secondary' : ''}`}
+>
   <slot />
-</a>
+</Tag>
 
 <style>
     .button {
