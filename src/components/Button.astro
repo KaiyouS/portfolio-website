@@ -1,5 +1,5 @@
 ---
-const { href, variant, type } = Astro.props;
+const { href, variant, type, ...rest } = Astro.props;
 
 const Tag = href ? 'a' : 'button';
 ---
@@ -7,6 +7,7 @@ const Tag = href ? 'a' : 'button';
   href={href} 
   type={!href ? (type || 'button') : undefined}
   class={`button ${variant === 'secondary' ? 'button--secondary' : ''}`}
+  {...rest} 
 >
   <slot />
 </Tag>
