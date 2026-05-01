@@ -1,0 +1,11 @@
+{
+  "title": "GradPass",
+  "description": "A multi-platform clearance tracker resolving university administrative bottlenecks. Features role-based workflows for students, staff, and admins.",
+  "tags": ["Flutter", "Supabase", "Edge Functions", "Dart"],
+  "images": [
+    { "src": "/src/assets/images/projects/gradpass/gradpass.jpg", "alt": "GradPass admin clearance screen", "device": "desktop" }
+  ],
+  "githubUrl": "https://github.com/KaiyouS/student_clearance_tracker",
+  "featured": true,
+  "order": 2
+}

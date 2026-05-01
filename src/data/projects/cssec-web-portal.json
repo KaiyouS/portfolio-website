@@ -1,0 +1,11 @@
+{
+  "title": "CSSEC Web Portal",
+  "description": "Architected a headless WordPress CMS to serve dynamic content via REST API. Configured content models and endpoints to seamlessly supply data to a decoupled React/Vite frontend built by collaborative team members.",
+  "tags": ["WordPress", "Headless CMS", "GraphQL", "Backend Architecture"],
+  "images": [
+    { "src": "/src/assets/images/projects/cssec/cssec.jpg", "alt": "CSSEC portal homepage on desktop", "device": "desktop" }
+  ],
+  "liveUrl": "https://addu-cssec-website.netlify.app/",
+  "featured": true,
+  "order": 3
+}

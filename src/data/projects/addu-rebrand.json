@@ -1,0 +1,12 @@
+{
+  "title": "AdDU Rebrand",
+  "description": "A modern, event-driven website redesign featuring dynamic content rendering from JSON, custom search overlays, and responsive mobile architecture.",
+  "tags": ["Vanilla JS", "HTML5", "CSS3", "DOM Manipulation"],
+  "images": [
+    { "src": "/src/assets/images/projects/addu-rebrand/addu-rebrand.jpg", "alt": "AdDU redesign homepage on desktop", "device": "desktop" }
+  ],
+  "githubUrl": "https://github.com/KaiyouS/addu-website-rebranding",
+  "liveUrl": "https://kaiyous.github.io/addu-website-rebranding/",
+  "featured": true,
+  "order": 4
+}

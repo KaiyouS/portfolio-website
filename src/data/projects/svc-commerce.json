@@ -1,0 +1,11 @@
+{
+  "title": "SVC Commerce",
+  "description": "A comprehensive Laravel 12 back-office platform managing catalog, inventory workflows, sales, deliveries, and PayMongo payment integration.",
+  "tags": ["Laravel", "Filament", "Livewire", "TailwindCSS", "MySQL"],
+  "images": [
+    { "src": "/src/assets/images/projects/svc-commerce/svc-commerce.jpg", "alt": "SVC Commerce dashboard on desktop", "device": "desktop" }
+  ],
+  "githubUrl": "https://github.com/KaiyouS/svc-commerce",
+  "featured": true,
+  "order": 1
+}

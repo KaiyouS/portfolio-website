@@ -1,19 +1,25 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Props {
   title: string;
   description: string;
   tags: string[];
   githubUrl?: string;
   liveUrl?: string;
-  imageUrl: string;
+  image: {
+    src: ImageMetadata;
+    alt: string;
+    device: "desktop" | "mobile";
+  };
 }
 
-const { title, description, tags, githubUrl, liveUrl, imageUrl } = Astro.props;
+const { title, description, tags, githubUrl, liveUrl, image } = Astro.props;
 ---
 
 <article class="project-card">
   <div class="card-image">
-    <img src={imageUrl} alt={`Screenshot of ${title}`} loading="lazy" />
+    <Image src={image.src} alt={image.alt} />
   </div>
 
   <div class="card-content">

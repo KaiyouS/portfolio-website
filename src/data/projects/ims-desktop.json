@@ -1,0 +1,11 @@
+{
+  "title": "IMS Desktop",
+  "description": "A robust Java Swing desktop application for managing inventory, suppliers, and purchase orders, backed by a relational database.",
+  "tags": ["Java", "Swing", "MySQL", "OOP"],
+  "images": [
+    { "src": "/src/assets/images/projects/ims/ims.jpg", "alt": "IMS inventory management screen", "device": "desktop" }
+  ],
+  "githubUrl": "https://github.com/KaiyouS/ims-db-exercises",
+  "featured": true,
+  "order": 5
+}

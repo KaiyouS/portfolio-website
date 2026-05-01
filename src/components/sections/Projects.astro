@@ -1,49 +1,12 @@
 ---
+import Button from "@components/Button.astro";
 import ProjectCard from "@components/ProjectCard.astro";
+import { getCollection } from "astro:content";
 
-const projects = [
-  {
-    title: "SVC Commerce",
-    description:
-      "A comprehensive Laravel 12 back-office platform managing catalog, inventory workflows, sales, deliveries, and PayMongo payment integration.",
-    tags: ["Laravel", "Filament", "Livewire", "TailwindCSS", "PostgreSQL"],
-    githubUrl: "https://github.com/KaiyouS/svc-commerce",
-    imageUrl: "/images/svc-commerce.jpg",
-  },
-  {
-    title: "GradPass",
-    description:
-      "A multi-platform clearance tracker resolving university administrative bottlenecks. Features role-based workflows for students, staff, and admins.",
-    tags: ["Flutter", "Supabase", "Edge Functions", "Dart"],
-    githubUrl: "https://github.com/KaiyouS/student_clearance_tracker",
-    imageUrl: "/images/gradpass.jpg",
-  },
-  {
-    title: "CSSEC Web Portal",
-    description:
-      "Architected a headless WordPress CMS to serve dynamic content via REST API. Configured content models and endpoints to seamlessly supply data to a decoupled React/Vite frontend built by collaborative team members.",
-    tags: ["WordPress", "Headless CMS", "REST API", "Backend Architecture"],
-    liveUrl: "https://addu-cssec-website.netlify.app/",
-    imageUrl: "/images/cssec.jpg",
-  },
-  {
-    title: "AdDU Rebrand",
-    description:
-      "A modern, event-driven website redesign featuring dynamic content rendering from JSON, custom search overlays, and responsive mobile architecture.",
-    tags: ["Vanilla JS", "HTML5", "CSS3", "DOM Manipulation"],
-    githubUrl: "https://github.com/KaiyouS/addu-website-rebranding",
-    liveUrl: "https://kaiyous.github.io/addu-website-rebranding/",
-    imageUrl: "/images/addu-rebrand.jpg",
-  },
-  {
-    title: "IMS Desktop",
-    description:
-      "A robust Java Swing desktop application for managing inventory, suppliers, and purchase orders, backed by a relational database.",
-    tags: ["Java", "Swing", "MySQL", "OOP"],
-    githubUrl: "https://github.com/KaiyouS/ims-db-exercises",
-    imageUrl: "/images/ims.jpg",
-  },
-];
+const allProjects = await getCollection("projects");
+const featured = allProjects
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order);
 ---
 
 <section id="projects" class="section projects-section">
@@ -57,18 +20,16 @@ const projects = [
     </div>
 
     <div class="projects-grid">
-      {
-        projects.map((project) => (
-          <ProjectCard
-            title={project.title}
-            description={project.description}
-            tags={project.tags}
-            githubUrl={project.githubUrl}
-            liveUrl={project.liveUrl}
-            imageUrl={project.imageUrl}
-          />
-        ))
-      }
+      {featured.map((project) => (
+        <ProjectCard
+          title={project.data.title}
+          description={project.data.description}
+          tags={project.data.tags}
+          githubUrl={project.data.githubUrl}
+          liveUrl={project.data.liveUrl}
+          image={project.data.images[0]}
+        />
+      ))}
     </div>
   </div>
 </section>
