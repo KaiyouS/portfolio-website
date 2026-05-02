@@ -1,7 +1,7 @@
 ---
+import { getCollection } from "astro:content";
 import Button from "@components/Button.astro";
 import ProjectCard from "@components/ProjectCard.astro";
-import { getCollection } from "astro:content";
 
 const allProjects = await getCollection("projects");
 const featured = allProjects
@@ -11,17 +11,21 @@ const featured = allProjects
 
 <section id="projects" class="section projects-section">
   <div class="container">
-    <div class="section-header">
-      <h2>Selected Works</h2>
+    <h2>Selected Works</h2>
+    <div class="intro">
       <p>
         A collection of applications I've built focusing on complex workflows,
         responsive design, and scalable architecture.
       </p>
+      <div class="view-all">
+        <Button href="/projects">View All Projects</Button>
+      </div>
     </div>
 
     <div class="projects-grid">
       {featured.map((project) => (
         <ProjectCard
+          slug={project.id}
           title={project.data.title}
           description={project.data.description}
           tags={project.data.tags}
@@ -41,24 +45,47 @@ const featured = allProjects
   }
 
   .section-header {
-    margin-bottom: 4rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
     max-width: 600px;
   }
+  
+  .intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    gap: 1rem;
+    margin-bottom: var(--spacing-y);
 
-  .section-header p {
-    font-size: 1.1rem;
-    opacity: 0.8;
+    p {
+      opacity: 0.8;
+      margin: 0;
+      text-wrap: pretty;
+    }
+
+    @media (width > 60rem) {
+      flex-direction: row;
+      align-items: center;
+
+      p {
+        max-width: 70%;
+      }
+    }
   }
 
   .projects-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
-  }
-
-  @media (min-width: 48rem) {
-    .projects-grid {
+  
+    @media (min-width: 48rem) {
       grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 75rem) {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 </style>
