@@ -5,7 +5,7 @@ const currentPath = Astro.url.pathname;
 <header class="header">
   <div class="container">
     <nav aria-label="Main Navigation">
-      <a href="#home" class="logo" aria-label="logo">
+      <a href="/" class="logo" aria-label="logo">
         <svg
           class="logo-icon"
           viewBox="0 0 44 72"
@@ -47,19 +47,20 @@ const currentPath = Astro.url.pathname;
 
       <ul>
         <li>
-          <a href="#home" class={currentPath === "/#  " ? "active" : ""}>Home</a>
+          <a href="/" class={currentPath === "/" ? "active" : ""}>Home</a>
         </li>
         <li>
           <a
-            href="#projects"
-            class={currentPath.includes("#projects") ? "active" : ""}
+            href="/projects"
+            class={currentPath.includes("/projects") ? "active" : ""}
             >Projects</a
           >
         </li>
         <li>
           <a
-            href="#contact"
-            class={currentPath.includes("#contact") ? "active" : ""}>Contact</a
+            href="/documents/Kaiyou_Serra_Resume.pdf"
+            target="_blank"
+            class="cta">Resume</a
           >
         </li>
       </ul>
@@ -156,49 +157,19 @@ const currentPath = Astro.url.pathname;
       background: var(--color-primary-bg);
     }
   }
+
+  .header nav li a.cta {
+    background-color: var(--color-primary);
+    color: var(--color-bg);
+    border-color: var(--color-primary);
+
+    --focus-outline-color: var(--color-primary-light);
+
+    &:hover,
+    &:focus-visible {
+      background-color: var(--color-primary-light);
+      border-color: var(--color-primary-light);
+      transform: translateY(1px);
+    }
+  }
 </style>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const navLinks = document.querySelectorAll(".header nav a");
-
-    navLinks.forEach((link) => {
-      link.addEventListener("click", (e) => {
-        const targetHref = link.getAttribute("href");
-        const currentPath = window.location.pathname;
-
-        if (targetHref === currentPath) {
-          e.preventDefault();
-          window.scrollTo(0, 0);
-        }
-      });
-    });
-  });
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('nav a');
-    const observerOptions = {
-      root: null,
-      rootMargin: '-20% 0px -80% 0px', 
-      threshold: 0
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const currentId = entry.target.getAttribute('id');
-          
-          navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${currentId}`) {
-              link.classList.add('active');
-            }
-          });
-        }
-      });
-    }, observerOptions);
-
-    sections.forEach(section => observer.observe(section));
-  });
-</script>
