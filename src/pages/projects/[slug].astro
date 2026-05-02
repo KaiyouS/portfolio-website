@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
 import Button from "@components/Button.astro";
 import Layout from "@layouts/Layout.astro";
+import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
@@ -40,12 +41,14 @@ const hasMultipleDevices = desktopImages.length > 0 && mobileImages.length > 0;
         </div>
         <p class="description">{description}</p>
         <div class="actions">
-          { githubUrl && (
-            <Button href={githubUrl}>GitHub &rarr;</Button>
-          )}
-          { liveUrl && (
-            <Button href={liveUrl} variant="secondary">Live Demo &rarr;</Button>
-          )}
+          {githubUrl && <Button href={githubUrl}>GitHub &rarr;</Button>}
+          {
+            liveUrl && (
+              <Button href={liveUrl} variant="secondary">
+                Live Demo &rarr;
+              </Button>
+            )
+          }
         </div>
       </header>
 
@@ -77,17 +80,21 @@ const hasMultipleDevices = desktopImages.length > 0 && mobileImages.length > 0;
               <div class="gallery-group" data-device="desktop">
                 {hasMultipleDevices && <p class="device-label">Desktop</p>}
                 <div class="desktop-grid">
-                  {desktopImages.map((img) => (
-                    <div class="desktop-frame">
-                      <div class="browser-bar">
-                        <span class="dot" />
-                        <span class="dot" />
-                        <span class="dot" />
-                      </div>
-                      <div class="desktop-screen">
-                        <Image src={img.src} alt={img.alt} />
-                      </div>
-                    </div>
+                  {desktopImages.map((img, index) => (
+                    <a
+                      href={img.src.src}
+                      data-fancybox="gallery"
+                      data-caption={img.alt}
+                      class="gallery-link desktop-item"
+                      aria-label={`View ${img.alt} fullscreen`}
+                    >
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        loading={index < 2 ? "eager" : "lazy"}
+                        fetchpriority={index === 0 ? "high" : "auto"}
+                      />
+                    </a>
                   ))}
                 </div>
               </div>
@@ -99,12 +106,21 @@ const hasMultipleDevices = desktopImages.length > 0 && mobileImages.length > 0;
               <div class="gallery-group" data-device="mobile">
                 {hasMultipleDevices && <p class="device-label">Mobile</p>}
                 <div class="mobile-grid">
-                  {mobileImages.map((img) => (
-                    <div class="phone-frame">
-                      <div class="phone-screen">
-                        <Image src={img.src} alt={img.alt} />
-                      </div>
-                    </div>
+                  {mobileImages.map((img, index) => (
+                    <a
+                      href={img.src.src}
+                      data-fancybox="gallery"
+                      data-caption={img.alt}
+                      class="gallery-link mobile-item"
+                      aria-label={`View ${img.alt} fullscreen`}
+                    >
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        loading={desktopImages.length > 0 ? "lazy" : (index < 3 ? "eager" : "lazy")}
+                        fetchpriority={desktopImages.length === 0 && index === 0 ? "high" : "auto"}
+                      />
+                    </a>
                   ))}
                 </div>
               </div>
@@ -161,7 +177,7 @@ const hasMultipleDevices = desktopImages.length > 0 && mobileImages.length > 0;
     flex-wrap: wrap;
   }
 
-  /* Gallery */
+  /* Gallery Layout */
   .gallery {
     display: flex;
     flex-direction: column;
@@ -173,6 +189,11 @@ const hasMultipleDevices = desktopImages.length > 0 && mobileImages.length > 0;
     flex-direction: column;
     padding-bottom: 2.5rem;
     gap: 1rem;
+    transition: opacity 0.2s ease;
+
+    &.hidden {
+      display: none;
+    }
   }
 
   .device-label {
@@ -185,60 +206,77 @@ const hasMultipleDevices = desktopImages.length > 0 && mobileImages.length > 0;
     margin: 0;
   }
 
-  /* Desktop frames */
   .desktop-grid {
     display: grid;
-    gap: 1.5rem;
+    gap: 1rem;
     grid-template-columns: 1fr;
 
-    @media (min-width: 48rem) {
-      grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+    @media (min-width: 36rem) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 62rem) {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 
-  .desktop-frame {
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 0.75rem;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    background: rgba(255, 255, 255, 0.03);
-  }
-
-  .desktop-screen img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    display: block;
-  }
-
-  /* Phone frames */
   .mobile-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 1.5rem;
   }
 
-  .phone-frame {
-    position: relative;
-    width: 220px;
-    border: 2px solid rgba(255, 255, 255, 0.15);
-    border-radius: 0.5rem;
-    overflow: hidden;
-    box-shadow:
-      var(--shadow);
-    background: rgba(255, 255, 255, 0.03);
-    flex-shrink: 0;
-  }
-
-  .phone-screen img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 9 / 19.5;
-    object-fit: cover;
+  /* Base Image Link Styles */
+  .gallery-link {
     display: block;
+    position: relative;
+    cursor: hand;
+    border-radius: var(--rounding);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    background: rgba(255, 255, 255, 0.03);
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      transition: background 0.2s ease;
+    }
+
+    &:hover::after {
+      background: rgba(255, 221, 51, 0.08);
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
   }
 
+  /* Desktop Modifiers */
+  .desktop-item {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    img {
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  /* Mobile Modifiers */
+  .mobile-item {
+    width: 235px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    img {
+      aspect-ratio: 9 / 19.5;
+    }
+  }
+
+  /* Filter Bar */
   .filter-bar {
     display: flex;
     gap: 0.5rem;
@@ -274,17 +312,64 @@ const hasMultipleDevices = desktopImages.length > 0 && mobileImages.length > 0;
       outline-offset: 2px;
     }
   }
-
-  .gallery-group {
-    transition: opacity 0.2s ease;
-
-    &.hidden {
-      display: none;
-    }
-  }
 </style>
 
 <script>
+  import { Fancybox } from "@fancyapps/ui/dist/fancybox/";
+
+  // ── Fancybox options ─────────────────────────────────────────────────────────
+  const fancyboxOpts = {
+    mainStyle: {
+      "--f-button-width": "44px",
+      "--f-button-height": "44px",
+      "--f-button-border-radius": "50%",
+      "--f-toolbar-padding": "16px",
+    },
+    Carousel: {
+      Arrows: false,
+      Toolbar: {
+        display: {
+          left: [],
+          middle: [],
+          right: ["close"],
+        },
+      },
+      transition: "slide",
+    },
+  };
+
+  // ── Gallery click handlers ───────────────────────────────────────────────────
+  const allLinks = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>(".gallery-link"),
+  );
+
+  allLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const visibleLinks = allLinks.filter(
+        (l) =>
+          !l
+            .closest<HTMLElement>(".gallery-group")
+            ?.classList.contains("hidden"),
+      );
+
+      const startIndex = visibleLinks.indexOf(link);
+
+      Fancybox.show(
+        visibleLinks.map((l) => ({
+          src: l.href,
+          caption: l.dataset.caption ?? "",
+        })),
+        {
+          ...fancyboxOpts,
+          startIndex: startIndex === -1 ? 0 : startIndex,
+        },
+      );
+    });
+  });
+
+  // ── Filter ──────────────────────────────────────────────────────────────────
   const filterBtns =
     document.querySelectorAll<HTMLButtonElement>(".filter-btn");
   const groups = document.querySelectorAll<HTMLElement>(
@@ -293,17 +378,14 @@ const hasMultipleDevices = desktopImages.length > 0 && mobileImages.length > 0;
 
   filterBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
-      const filter = btn.dataset.filter;
-
-      // Update active button
+      const filter = btn.dataset.filter!;
       filterBtns.forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
-
-      // Show/hide groups
       groups.forEach((group) => {
-        const device = group.dataset.device;
-        const visible = filter === "all" || filter === device;
-        group.classList.toggle("hidden", !visible);
+        group.classList.toggle(
+          "hidden",
+          filter !== "all" && filter !== group.dataset.device,
+        );
       });
     });
   });
