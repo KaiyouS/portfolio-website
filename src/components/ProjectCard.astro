@@ -13,10 +13,19 @@ interface Props {
     alt: string;
     device: "desktop" | "mobile";
   };
+  eagerLoad?: boolean; 
 }
 
-const { slug, title, description, tags, githubUrl, liveUrl, image } =
-  Astro.props;
+const { 
+  slug, 
+  title, 
+  description, 
+  tags, 
+  githubUrl, 
+  liveUrl, 
+  image,
+  eagerLoad = false 
+} = Astro.props;
 ---
 
 <article class="project-card">
@@ -25,7 +34,11 @@ const { slug, title, description, tags, githubUrl, liveUrl, image } =
     class="card-image"
     aria-label={`View ${title} details`}
   >
-    <Image src={image.src} alt={image.alt} />
+    <Image 
+      src={image.src} 
+      alt={image.alt} 
+      loading={eagerLoad ? "eager" : "lazy"}
+    />
     <span class="card-overlay">View Project</span>
   </a>
 

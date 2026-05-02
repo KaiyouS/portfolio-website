@@ -22,8 +22,8 @@ const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
         </p>
       </div>
 
-      <div class="projects-grid">
-        {projects.map((project) => (
+<div class="projects-grid">
+        {projects.map((project, index) => (
           <ProjectCard
             slug={project.id}
             title={project.data.title}
@@ -32,6 +32,7 @@ const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
             githubUrl={project.data.githubUrl}
             liveUrl={project.data.liveUrl}
             image={project.data.images[0]}
+            eagerLoad={index < 3} 
           />
         ))}
       </div>
